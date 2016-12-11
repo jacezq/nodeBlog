@@ -7,17 +7,17 @@ $(function(){
     var $userInfo = $("#userInfo");
 
 
-    $loginBox.find("a").eq(1).click(function(){
+    $loginBox.find("a").click(function(){
         $loginBox.hide();
         $registerBox.show();
     });
-    $registerBox.find("a").eq(1).click(function(){
+    $registerBox.find("a").click(function(){
         $registerBox.hide();
         $loginBox.show();
     });
 
     //注册
-    $registerBox.find("a").eq(0).click(function(){
+    $registerBox.find("button").click(function(){
         $.ajax({
             type:'post',
             url:'/api/user/register',
@@ -28,7 +28,7 @@ $(function(){
             },
             dataType:'json',
             success:function(result){
-                $registerBox.find(".message").html(result.message);
+                $registerBox.find(".textCenter").html(result.message);
                 if(!result.code){
                     setTimeout(function(){
                         $registerBox.hide();
@@ -41,7 +41,7 @@ $(function(){
     });
 
     //登录
-    $loginBox.find("a").eq(0).click(function(){
+    $loginBox.find("button").click(function(){
         $.ajax({
             url : '/api/user/login',
             type:'post',
@@ -51,7 +51,7 @@ $(function(){
                 password:$loginBox.find('[name="password"]').val()
             },
             success:function(result){
-                $loginBox.find('.message').html(result.message);
+                $loginBox.find('.textCenter').html(result.message);
                 //登录成功
                 if(!result.code){
                     // setTimeout(function(){

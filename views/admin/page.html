@@ -1,0 +1,16 @@
+<nav>
+    <ul class="pager">
+        {% if (page-1)>0  %}
+        <li class="previous"><a href="/admin/{{type}}?page={{ page-1 }}">&larr; 上一页</a></li>
+        {% else %}
+        <li class="previous disabled "><a href="/admin/{{type}}?page={{ 1 }}">&larr; 上一页</a></li>
+        {% endif %}
+        <li>总条数是{{count}},当前是第{{page}},总页数是{{ pages }},每页显示{{limit}}</li>
+
+        {% if (page+1) > pages  %}
+        <li class="next disabled"><a href="/admin/{{type}}?page={{ pages }}">下一页 &rarr;</a></li>
+        {% else %}
+        <li class="next"><a href="/admin/{{type}}?page={{ page+1 }}">下一页 &rarr;</a></li>
+        {% endif %}
+    </ul>
+</nav>

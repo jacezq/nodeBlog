@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/User');
+var Content = require('../models/content');
 
 var responseDate;
 
@@ -15,6 +16,7 @@ router.use(function (req, res, next) {
     next();
 });
 
+//注册操作
 router.post('/user/register', function (req, res, netx) {
     var username = req.body.username;
     var password = req.body.password;
@@ -58,12 +60,12 @@ router.post('/user/register', function (req, res, netx) {
         return user.save();
         // 保存用户注册信息
     }).then(function (newUserInfo) {
-        console.log(newUserInfo);
         responseDate.message = '恭喜你，注册成功';
         res.json(responseDate);
     });
 });
 
+//登录操作
 router.post('/user/login', function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
@@ -104,9 +106,46 @@ router.post('/user/login', function (req, res) {
 
 });
 
-
+//退出登录
 router.get('/user/logOut', function (req, res) {
     req.cookies.set('userInfo', null);
     res.json(responseDate);
 });
+
+//文章评论加载
+router.get('/comment', function (req, res) {
+    var contentId = req.query.contentid || '';
+    Content.findOne({
+        _id: contentId
+    }).then(function (content) {
+        responseDate.data = content.comments;
+        // console.log('responseDate');
+        // console.log(responseDate);
+        res.json(responseDate);
+    })
+});
+
+//文章评论接口
+router.post('/comment/post', function (req, res) {
+    var contentId = req.body.contentid || '';
+    var postData = {
+        username: req.userInfo.username,
+        postTime: new Date(),
+        content: req.body.content
+    };
+
+    //查询文章内容，并返回该id下文章全部信息
+    Content.findOne({
+        _id: contentId
+    }).then(function (content) {
+        content.comments.push(postData);
+        return content.save();
+    }).then(function (newContent) {
+        responseDate.message = '评论成功';
+        responseDate.data = newContent;
+        res.json(responseDate);
+    })
+});
+
+
 module.exports = router;

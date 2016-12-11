@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<ol class="breadcrumb">
+    <li><a href="/admin">后台管理</a></li>
+    <li class="active">内容管理首页</li>
+</ol>
+<h3>内容信息列表</h3>
+{% include 'page.html' %}
+<table class="table table-hover table-bordered table-striped">
+    <tr>
+        <th>序号</th>
+        <th>ID</th>
+        <th>标题</th>
+        <th>作者</th>
+        <th>添加时间</th>
+        <th>点击量</th>
+        <th>分类</th>
+        <th>简介</th>
+        <th>操作</th>
+    </tr>
+    {% for content in contents %}
+    <tr>
+        <td>{{loop.index}}
+        <td>{{content.id}}</td>
+        <td>{{content.title}}</td>
+        <td>{{content.user.username}}</td>
+        <td>{{content.addTime|date('Y-m-d H:i:s',-8*60)}}</td>
+        <td>{{content.views}}</td>
+        <td>{{content.category.name}}</td>
+        <td>{{content.description}}</td>
+        <td>
+            <a href="/admin/content/edit?id={{ content.id }}">编辑</a> |
+            <a href="/admin/content/delete?id={{ content.id }}">删除</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% include 'page.html' %}
+
+{% endblock  %}
