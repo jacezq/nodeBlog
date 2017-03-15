@@ -51,7 +51,6 @@ app.use(function(req,res,next){
         next();
     }
     // console.log(req.cookies.get('userInfo'));
-
 });
 
 

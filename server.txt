@@ -1,4 +1,4 @@
 ﻿
 命令设置端口号
-F:\Program Files\MongoDB\Server\3.4\bin>mongod --dbpath=F:\angularJS\nodeBlog\db --port=27017
+F:\Program Files\MongoDB\Server\3.4\bin>mongod --dbpath=F:\angularJS\nodeBlog\db --port=27018
 数据库啊
